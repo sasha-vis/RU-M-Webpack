@@ -1,0 +1,28 @@
+.controls {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.soundButton {
+	width: 160px;
+	height: 160px;
+	border: 1px solid #fff;
+	border-radius: 16px;
+	background-size: cover;
+	background-position: center;
+	position: relative;
+	cursor: pointer;
+	transition: transform 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.soundButton img {
+	width: 40px;
+	height: 40px;
+	filter: drop-shadow(0 0 5px #000000aa);
+}
