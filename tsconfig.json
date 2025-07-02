@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "./dist/",
+		"module": "es2020",
+		"target": "es2020",
+		// "allowJs": true,
+		// "checkJs": true,
+		"moduleResolution": "node",
+		// "esModuleInterop": true,
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitOverride": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@types/*": ["types/*"],
+			"@assets/*": ["assets/*"],
+			"@components": ["components"],
+			"@core": ["core"]
+		},
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "dist"]
+}

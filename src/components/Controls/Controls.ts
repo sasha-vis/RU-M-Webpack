@@ -1,11 +1,13 @@
-import { BaseComponent } from '../../core/index.js';
-import * as styles from './Controls.module.css';
+import { BaseComponent } from '@core';
+import styles from './Controls.module.css';
 
-export class Controls extends BaseComponent {
-	constructor({ items, onToggle }) {
+export class Controls extends BaseComponent<ControlsProps, ControlsState> {
+	audio: HTMLAudioElement;
+
+	constructor(props: ControlsProps) {
 		super('div', { className: styles.controls });
-		this.props = { items, onToggle };
-		this.state = { activeKey: null, isPlaying: false };
+		this.props = props;
+		this.state = { activeKey: null, isPlaying: false, volume: 0.5 };
 		this.audio = new Audio();
 		this.render();
 		this.initEvents();
@@ -13,12 +15,16 @@ export class Controls extends BaseComponent {
 
 	initEvents() {
 		this.el.addEventListener('click', (e) => {
-			const btn = e.target.closest('button[data-key]');
+			const target = e.target as HTMLElement | null;
+			if (!target) return;
+
+			const btn = target.closest('button[data-key]') as HTMLButtonElement | null;
 			if (!btn) return;
 
 			const soundKey = btn.dataset.key;
-			const item = this.props.items.find((i) => i.soundKey === soundKey);
+			if (!soundKey) return;
 
+			const item = this.props.items.find((i) => i.soundKey === soundKey);
 			if (!item) return;
 
 			const isSame = this.state.activeKey === soundKey;
@@ -35,12 +41,12 @@ export class Controls extends BaseComponent {
 		});
 	}
 
-	updateVolume(value) {
+	updateVolume(value: number) {
 		this.audio.volume = value;
 		this.setState({ volume: value });
 	}
 
-	render() {
+	override render() {
 		this.el.innerHTML = this.props.items
 			.map((item) => {
 				const isActive = this.state.activeKey === item.soundKey;

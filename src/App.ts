@@ -1,9 +1,14 @@
-import { BaseComponent } from './core/index.js';
-import { Background, Controls, VolumeSlider } from './components/index.js';
-import * as styles from './App.module.css';
+import { BaseComponent } from '@core';
+import { Background, Controls, VolumeSlider } from '@components';
+import styles from './App.module.css';
 
 export class App extends BaseComponent {
-	constructor(data) {
+	data: SoundData[];
+	bg: Background;
+	controls: Controls;
+	volumeSlider: VolumeSlider;
+
+	constructor(data: SoundData[]) {
 		super('div', { className: styles.app });
 		this.data = data;
 
@@ -11,17 +16,17 @@ export class App extends BaseComponent {
 
 		this.controls = new Controls({
 			items: data,
-			onToggle: (item) => this.bg.updateBackground(item.bgImage),
+			onToggle: (item: SoundData) => this.bg.updateBackground(item.bgImage),
 		});
 
 		this.volumeSlider = new VolumeSlider({
-			onChange: (vol) => this.controls.updateVolume(vol),
+			onChange: (vol: number) => this.controls.updateVolume(vol),
 		});
 
 		this.render();
 	}
 
-	render() {
+	override render() {
 		this.el.innerHTML = `<h1 class="${styles.title}">Weather Sounds</h1>`;
 		this.el.append(
 			this.controls.getElement(),
