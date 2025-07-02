@@ -4,11 +4,21 @@ const path = require('path');
 
 module.exports = {
 	context: path.resolve(__dirname, '../src'),
-	entry: './index.js',
+	entry: './index.ts',
 	output: {
 		filename: '[name].[contenthash].js',
 		path: path.resolve(__dirname, '../dist'),
 		clean: true,
+	},
+	resolve: {
+		extensions: ['.ts', '.js'],
+		alias: {
+			'@types': path.resolve(__dirname, '../src/types'),
+			'@assets': path.resolve(__dirname, '../src/assets'),
+			'@components': path.resolve(__dirname, '../src/components'),
+			'@core': path.resolve(__dirname, '../src/core'),
+		},
+		mainFiles: ['index'],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -27,8 +37,10 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
+							esModule: false,
 							modules: {
 								localIdentName: '[local]__[hash:base64:5]',
+								exportLocalsConvention: 'camelCase',
 							},
 						},
 					},
@@ -50,6 +62,11 @@ module.exports = {
 			{
 				test: /\.(mp3|wav|ogg)$/i,
 				type: 'asset/resource',
+			},
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
 			},
 		],
 	},

@@ -1,12 +1,12 @@
-import { BaseComponent } from '../../core/index.js';
-import * as styles from './Background.module.css';
+import { BaseComponent } from '@core';
+import styles from './Background.module.css';
 
 export class Background extends BaseComponent {
 	constructor() {
 		super('div', { className: styles.backgroundBlur });
 	}
 
-	updateBackground(imageUrl) {
+	updateBackground(imageUrl: string) {
 		this.el.style.backgroundImage = `url(${imageUrl})`;
 	}
 }
